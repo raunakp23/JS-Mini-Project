@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TO-DO List</title>
+</head>
+<body>
+    <h1>TO-DO List</h1>
+    <input type="text" id="taskInput"  placeholder="Add New Task">
+    <button onclick="addTask()">Add Task</button>
+    <ul id="taskList"></ul>
+
+    <script>
+        let tasks = []
+
+        function addTask(){
+            const taskInput = document.getElementById('taskInput');
+            const taskText = taskInput.value.trim();
+
+            if(taskText !== ''){
+                tasks.push(taskText);
+                displayTask();
+                taskInput.value = ''
+            }
+        }
+        
+        function displayTask(){
+            const taskList = document.querySelector('#taskList');
+            taskList.innerHTML = ''
+            tasks.forEach((task,index)=>{
+                const li = document.createElement('li');
+                li.textContent = task;
+
+                const deleteButton = document.createElement('button')
+                deleteButton.textContent = 'Delete';
+                deleteButton.onclick = function(){
+                    tasks.splice(index,1)
+                    displayTask()
+                }
+
+                const updateButton = document.createElement('button')
+                updateButton.textContent ='update'
+
+                updateButton.onclick = function(){
+                const updateTask = prompt('enter update task: ', task)
+
+                    if(updateTask !== null){
+                        tasks[index] = updateTask.trim()
+                        displayTask()
+                    }
+                }
+
+                li.appendChild(deleteButton)
+                li.appendChild(updateButton)
+
+                taskList.appendChild(li)
+            })
+        }
+
+        
+
+    </script>
+</body>
+</html>
